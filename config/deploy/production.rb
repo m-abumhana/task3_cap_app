@@ -59,3 +59,11 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+# config/deploy/production.rb
+server "13.60.65.12", user: "ec2-user", roles: %w{app db web}, primary: true
+
+set :ssh_options, {
+  keys: %w(/home/ec2-user/.ssh/id_rsa),
+  forward_agent: true,
+  auth_methods: %w(publickey)
+}

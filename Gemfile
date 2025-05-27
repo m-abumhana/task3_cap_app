@@ -6,44 +6,42 @@ ruby "3.2.2"
 # Rails API only
 gem "rails", "~> 7.0.8"
 
-# Use sqlite3 as the database for Active Record (dev & test only)
+# Use sqlite3 in development & test
 group :development, :test do
   gem "sqlite3", "~> 1.4"
+  gem "debug",    platforms: %i[mri mingw x64_mingw]
 end
 
-# Use Puma as the app server
+# Use MySQL in all environments
+gem "mysql2", ">= 0.5", "< 0.6"
+
+# App server
 gem "puma", "~> 5.0"
 
-# For rendering JSON APIs
-# (ActiveModelSerializers or fast_jsonapi go here if you like)
+# Timezone data
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
-# Manage timezones
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-
-# Speed up boot
+# Speed up boot time
 gem "bootsnap", require: false
 
-# ————————————————————————————————
-# Development & Test
-group :development, :test do
-  # debugging
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-
-  # web console (dev only)
-  gem "web-console",    group: :development
+# Web console (development only)
+group :development do
+  gem "web-console"
 end
 
+# System & integration testing
 group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Core logger (if you need any custom logger features)
 gem "logger"
-# ————————————————————————————————
+
 # Capistrano for deployment (development only)
 group :development do
-  gem "capistrano",       "~> 3.17", require: false
-  gem "capistrano-rails",            require: false
-  gem "capistrano-passenger",        require: false  # or capistrano-puma if you use Puma
-  gem "capistrano-rbenv",            require: false
+  gem "capistrano",        "~> 3.19", require: false
+  gem "capistrano-rails",           require: false
+  gem "capistrano-passenger",       require: false  # or capistrano-puma
+  gem "capistrano-rbenv",           require: false
 end
-
